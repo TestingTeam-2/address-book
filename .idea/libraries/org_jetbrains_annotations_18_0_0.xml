@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="org.jetbrains:annotations:18.0.0" type="repository">
+    <properties maven-id="org.jetbrains:annotations:18.0.0" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/jetbrains/annotations/18.0.0/annotations-18.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../AddressBook-ExistingProject/lib/sqlite-jdbc-3.8.10.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../AddressBook-ExistingProject/lib/sqlite-jdbc-3.8.10.1.jar!/" />
+    </SOURCES>
+  </library>
+</component>
