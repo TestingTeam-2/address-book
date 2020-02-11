@@ -1,4 +1,4 @@
-package GUI;
+package AddressBook;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +35,7 @@ import java.awt.*;
  */
 //package layout;
 
-// This code is exempt from testing requirements, because it is purely GUI related.
+// This code is exempt from testing requirements, because it is purely AddressBook related.
 
 
 public class SpringUtilities {

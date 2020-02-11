@@ -1,10 +1,4 @@
-package GUI;
-
-import AddressBook.AddressBook;
-import AddressBook.AddressBookController;
-import AddressBook.FileSystem;
-import AddressBook.Person;
-import AddressBook.PersonDialog;
+package AddressBook;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
