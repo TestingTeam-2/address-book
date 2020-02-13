@@ -1,17 +1,20 @@
 package AddressBook;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-
-import static org.junit.Assert.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
 
 public class AddressBookControllerTest {
 
@@ -93,12 +96,14 @@ public class AddressBookControllerTest {
 
     @Test
     public void open() throws FileNotFoundException, SQLException {
-
+        AddressBook addressBook = Mockito.spy(new AddressBook());
         AddressBookController addressBookController = new AddressBookController(addressBook);
-        File file = new File("test/AddressBook/test");
+        File file = new File("test/AddressBook/test.db");
 
         addressBookController.open(file);
-        verify(addressBook, times(1)).fireTableDataChanged();
+        addressBookController.open(file);
+        addressBookController.open(file);
+        verify(addressBook, times(3)).fireTableDataChanged();
     }
 
     @Test
