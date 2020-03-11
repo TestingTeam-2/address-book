@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import org.junit.Rule;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
@@ -25,7 +26,13 @@ public class AddressBookControllerTest {
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
+    /**
+     * Checks if persons are correctly added to address book.
+     * @result Persons will be added to address book
+     *         without any errors.
+     */
     @Test
+    @Timeout(1)
     public void add() {
         AddressBook addressBook = new AddressBook();
         AddressBookController addressBookController = new AddressBookController(addressBook);
@@ -40,7 +47,13 @@ public class AddressBookControllerTest {
         assertArrayEquals(pArray, addressBook.getPersons());
     }
 
+    /**
+     * Checks if persons are correctly added to address book.
+     * @result Persons will be added to address book
+     *         without any errors.
+     */
     @Test
+    @Timeout(1)
     public void set() {
         AddressBook addressBook = new AddressBook();
         AddressBookController addressBookController = new AddressBookController(addressBook);
@@ -56,6 +69,7 @@ public class AddressBookControllerTest {
     }
 
     @Test
+    @Timeout(1)
     public void remove() {
         AddressBook addressBook = new AddressBook();
         AddressBookController addressBookController = new AddressBookController(addressBook);
@@ -70,6 +84,7 @@ public class AddressBookControllerTest {
     }
 
     @Test
+    @Timeout(1)
     public void get() {
         AddressBook addressBook = new AddressBook();
         AddressBookController addressBookController = new AddressBookController(addressBook);
