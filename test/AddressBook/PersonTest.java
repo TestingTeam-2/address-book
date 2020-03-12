@@ -1,15 +1,19 @@
 package AddressBook;
 
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.jupiter.api.Test;
+
 class PersonTest {
 
+  /**
+   * Checks if person's first name is correctly retrieved from address book.
+   * @result Person's first name will be retrieved from address book
+   *         without any errors.
+   */
   @Test
   void getFirstName() {
     List<Person> persons = new ArrayList<>();
@@ -19,6 +23,11 @@ class PersonTest {
     assertArrayEquals(new String[]{"Brian", "Briana"}, firstNames);
   }
 
+  /**
+   * Checks if person's last name is correctly retrieved from address book.
+   * @result Person's last name will be retrieved from address book
+   *         without any errors.
+   */
   @Test
   void getLastName() {
     List<Person> persons = new ArrayList<>();
@@ -28,6 +37,11 @@ class PersonTest {
     assertArrayEquals(new String[]{"Withrow", "Winslow"}, lastNames);
   }
 
+  /**
+   * Checks if person's address is correctly retrieved from address book.
+   * @result Person's address will be retrieved from address book
+   *         without any errors.
+   */
   @Test
   void getAddress() {
     List<Person> persons = new ArrayList<>();
@@ -37,6 +51,11 @@ class PersonTest {
     assertArrayEquals(new String[]{"12345 12TH AVE SE", "54321 12TH AVE SE"}, addresses);
   }
 
+  /**
+   * Checks if person's city is correctly retrieved from address book.
+   * @result Person's city will be retrieved from address book
+   *         without any errors.
+   */
   @Test
   void getCity() {
     List<Person> persons = new ArrayList<>();
@@ -45,7 +64,11 @@ class PersonTest {
     String[] cities = new String[]{persons.get(0).getCity(),persons.get(1).getCity()};
     assertArrayEquals(new String[]{"Naples", "Atlanta"}, cities);
   }
-
+  /**
+   * Checks if person's state is correctly retrieved from address book.
+   * @result Person's state will be retrieved from address book
+   *         without any errors.
+   */
   @Test
   void getState() {
     List<Person> persons = new ArrayList<>();
@@ -55,6 +78,11 @@ class PersonTest {
     assertArrayEquals(new String[]{"FL", "GA"}, states);
   }
 
+  /**
+   * Checks if person's zip code is correctly retrieved from address book.
+   * @result Person's zip code will be retrieved from address book
+   *         without any errors.
+   */
   @Test
   void getZip() {
     List<Person> persons = new ArrayList<>();
@@ -64,6 +92,11 @@ class PersonTest {
     assertArrayEquals(new String[]{"30001", "30002"}, zips);
   }
 
+  /**
+   * Checks if person's phone number is correctly retrieved from address book.
+   * @result Person's phone number will be retrieved from address book
+   *         without any errors.
+   */
   @Test
   void getPhone() {
     List<Person> persons = new ArrayList<>();
@@ -73,7 +106,11 @@ class PersonTest {
     assertArrayEquals(new String[]{"239555555", "239555557"}, phones);
   }
 
-
+  /**
+   * Checks if person object correctly converted to string.
+   * @result Person object will be converted to a string
+   *         without any errors.
+   */
   @Test
   void toStringTest() {
     List<Person> persons = new ArrayList<>();
@@ -84,6 +121,11 @@ class PersonTest {
     assertArrayEquals(new String[]{"Withrow, Brian", "Winslow, Briana"}, names);
   }
 
+  /**
+   * Checks if string is contained within a field of person object.
+   * @result Returns true or false depending on
+   *         without any errors.
+   */
   @Test
   void containsString() {
     String[] searches = new String[]{"Brian", "Withrow", "12345 12TH AVE SE", "Naples", "FL", "30001", "239555555"};
@@ -94,6 +136,11 @@ class PersonTest {
     }
   }
 
+  /**
+   * Checks if person's field is correctly retrieved from address book based on index.
+   * @result Person's field will be retrieved from address book
+   *         without any errors.
+   */
   @Test
   void getField() {
     String[] searches = new String[]{"Withrow", "Brian", "12345 12TH AVE SE", "Naples", "FL", "30001", "239555555"};
