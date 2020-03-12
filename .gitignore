@@ -1,3 +1,6 @@
 .idea/
 AddressBook.iml
 out/*
+.DS_Store
+address-book.iml
+test/.DS_Store
