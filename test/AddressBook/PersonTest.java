@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PersonTest {
 
@@ -81,7 +80,8 @@ class PersonTest {
     persons.add(new Person("Briana", "Winslow", "54321 12TH AVE SE", "Atlanta", "GA", "30002", "239555557"));
     String[] names = new String[]{persons.get(0).getLastName() + ", " + persons.get(0).getFirstName(),persons.get(1).getLastName() + ", " + persons.get(1).getFirstName()};
 
-    assertArrayEquals(new String[]{"Withrow, Brian", "Winslow, Briana"}, names);
+    assertEquals(persons.get(0).toString(), names[0].toString());
+    assertEquals(persons.get(1).toString(), names[1].toString());
   }
 
   @Test
@@ -102,5 +102,7 @@ class PersonTest {
     for(int i = 0; i < searches.length; i++){
       assertEquals(searches[i], persons.getField(i));
     }
+    Exception exception = assertThrows(IllegalArgumentException.class,() -> persons.getField(7));
+    assertEquals("Field number out of bounds", exception.getMessage());
   }
 }

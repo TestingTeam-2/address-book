@@ -25,6 +25,16 @@ class AddressBookTest {
   void remove() {
   }
 
+  @Test(timeout = 1)
+  void removeTime(){
+    Person person = new Person("Brian", "Withrow", "12345 12TH AVE SE", "Naples", "FL", "30001", "239555555");
+    AddressBook addresses = new AddressBook();
+
+    addresses.add(person);
+    addresses.remove(1);
+  }
+
+
   @Test
   void get() {
   }
