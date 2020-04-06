@@ -3,8 +3,11 @@ package AddressBook;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -108,6 +111,22 @@ public class AddressBookControllerTest {
   public void get() {
     addressBook.add(p);
     assertNotNull(addressBookController.get(0));
+
+  }
+
+  @Test
+  public void testInvalidGet() {
+
+    // stub test
+    assertThrows(IndexOutOfBoundsException.class, () -> {
+      when(
+          addressBook.get(
+              anyInt()
+          )
+      ).thenThrow(new IndexOutOfBoundsException());
+      addressBookController.get(anyInt());
+    });
+
   }
 
   /**
