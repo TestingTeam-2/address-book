@@ -1,12 +1,22 @@
 package AddressBook;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AddressBookTest {
+  class stubAddressBook extends AddressBook{
+      public int getColumnCount() {
+        return 0;
+    }
+
+    public int getRowCount(){
+        return 0;
+    }
+  }
 
   @Test
   void getPersons() {
@@ -51,7 +61,15 @@ class AddressBookTest {
   }
 
   @Test
-  void getColumnCount() {
+  void getColumnCountStub() {
+    stubAddressBook stubTest = new stubAddressBook();
+    assertEquals(0, stubTest.getColumnCount());
+  }
+
+  @Test
+  void getRowCountStub(){
+    stubAddressBook stubTest = new stubAddressBook();
+    assertEquals(0, stubTest.getRowCount());
   }
 
   @Test
