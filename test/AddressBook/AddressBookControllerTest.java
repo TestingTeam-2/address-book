@@ -111,10 +111,9 @@ public class AddressBookControllerTest {
     public void get() {
         addressBook.add(p);
         assertNotNull(addressBookController.get(0));
-
     }
 
-    @Test
+  @Test
     public void testInvalidGet() throws IndexOutOfBoundsException {
 
         // stub test
@@ -147,11 +146,16 @@ public class AddressBookControllerTest {
      *
      * @result Address book will be opened without any errors.
      */
+
+
     @Test
     public void open() throws FileNotFoundException, SQLException {
         addressBook = Mockito.spy(new AddressBook());
         addressBookController = new AddressBookController(addressBook);
         File file = new File("test/AddressBook/test.db");
+
+        assertThrows(FileNotFoundException.class, () ->
+            addressBookController.open(new File("#")));
 
         addressBookController.open(file);
         addressBookController.open(file);
