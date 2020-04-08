@@ -26,7 +26,7 @@ public class AddressBookController {
         addressBook.remove(index);
     }
 
-    public Person get(int index) {
+    public Person get(int index) throws IndexOutOfBoundsException {
         return addressBook.get(index);
     }
 
