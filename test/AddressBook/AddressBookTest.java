@@ -1,11 +1,11 @@
 package AddressBook;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 class AddressBookTest {
   class stubAddressBook extends AddressBook{
@@ -34,13 +34,14 @@ class AddressBookTest {
   void remove() {
   }
 
-  @Test(timeout = 1)
+  @Test
+  @Timeout(1)
   void removeTime(){
     Person person = new Person("Brian", "Withrow", "12345 12TH AVE SE", "Naples", "FL", "30001", "239555555");
     AddressBook addresses = new AddressBook();
 
     addresses.add(person);
-    addresses.remove(1);
+    addresses.remove(0);
   }
 
 
