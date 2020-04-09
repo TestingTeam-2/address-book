@@ -8,13 +8,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
 class AddressBookTest {
-  class stubAddressBook extends AddressBook{
-      public int getColumnCount() {
-        return 0;
+
+  class stubAddressBook extends AddressBook {
+
+    public int getColumnCount() {
+      return 0;
     }
 
-    public int getRowCount(){
-        return 0;
+    public int getRowCount() {
+      return 0;
     }
   }
 
@@ -36,8 +38,9 @@ class AddressBookTest {
 
   @Test
   @Timeout(1)
-  void removeTime(){
-    Person person = new Person("Brian", "Withrow", "12345 12TH AVE SE", "Naples", "FL", "30001", "239555555");
+  void removeTime() {
+    Person person = new Person("Brian", "Withrow", "12345 12TH AVE SE", "Naples", "FL", "30001",
+        "239555555");
     AddressBook addresses = new AddressBook();
 
     addresses.add(person);
@@ -56,8 +59,10 @@ class AddressBookTest {
   @Test
   void getRowCount() {
     List<Person> persons = new ArrayList<>();
-    persons.add(new Person("Brian", "Withrow", "12345 12TH AVE SE", "Naples", "FL", "30001", "239555555"));
-    persons.add(new Person("Briana", "Withrow", "12345 12TH AVE SE", "Naples", "FL", "30001", "239555556"));
+    persons.add(
+        new Person("Brian", "Withrow", "12345 12TH AVE SE", "Naples", "FL", "30001", "239555555"));
+    persons.add(
+        new Person("Briana", "Withrow", "12345 12TH AVE SE", "Naples", "FL", "30001", "239555556"));
     assertEquals(2, persons.size());
   }
 
@@ -68,7 +73,7 @@ class AddressBookTest {
   }
 
   @Test
-  void getRowCountStub(){
+  void getRowCountStub() {
     stubAddressBook stubTest = new stubAddressBook();
     assertEquals(0, stubTest.getRowCount());
   }
