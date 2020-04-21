@@ -1,15 +1,12 @@
 package AddressBook;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.sql.SQLException;
 import org.junit.Rule;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
@@ -115,20 +112,6 @@ public class AddressBookControllerNonFunctionalTest {
         addressBook.add(p);
         addressBook.add(p1);
         addressBookController.clear();
-    }
-
-    /**
-     * Checks if address book is correctly opened within 1 second.
-     *
-     * @result Address book will be opened without any errors.
-     */
-
-    @Test
-    public void open() throws FileNotFoundException, SQLException {
-        addressBook = Mockito.spy(new AddressBook());
-        addressBookController = new AddressBookController(addressBook);
-        File file = new File("test/AddressBook/test.db");
-        addressBookController.open(file);
     }
 
 }
