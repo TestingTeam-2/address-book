@@ -12,6 +12,8 @@ import static org.mockito.Mockito.when;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Rule;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,6 +38,8 @@ public class AddressBookControllerTest {
     @Mock
     Person p1;
 
+    private FileSystem fs;
+    private File file;
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
@@ -48,6 +52,8 @@ public class AddressBookControllerTest {
             "Naples", "FL", "30001", "239555555");
         p1 = new Person("Briana", "Withrow", "12345 12TH AVE SE",
             "Naples", "FL", "30001", "239555556");
+        fs = new FileSystem();
+        file = new File("test/AddressBook/test.db");
     }
 
     @AfterEach
@@ -56,6 +62,8 @@ public class AddressBookControllerTest {
         addressBookController = null;
         p = null;
         p1 = null;
+        fs = null;
+        file = null;
     }
 
     /**
@@ -164,8 +172,23 @@ public class AddressBookControllerTest {
     }
 
     @Test
-    public void save() {
-
+    public void save() throws SQLException, FileNotFoundException {
+        List<Person> persons = new ArrayList<>();
+        persons.add(
+            new Person("Carlos", "Reyes", "1234 25th Way", "Naples", "FL", "30001", "2392392399"));
+        persons.add(
+            new Person("Brian", "Withrow", "1234 26th Way", "Chicago", "IL", "10001", "2012012001"));
+        addressBook.add(persons.get(0));
+        addressBook.add(persons.get(1));
+        AddressBookController abc = new AddressBookController(addressBook);
+        abc.save(file);
+        AddressBook readAddressBook = new AddressBook();
+        fs.readFile(readAddressBook, file);
+        for (int i = 0; i < readAddressBook.getPersons().length; i++) {
+            for (int j = 0; j < Person.fields.length; j++) {
+                assertEquals(persons.get(i).getField(j),readAddressBook.get(i).getField(j));
+            }
+        }
     }
 
     /**

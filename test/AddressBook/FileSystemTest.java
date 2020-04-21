@@ -61,6 +61,14 @@ class FileSystemTest {
   }
 
   @Test
+  void readFileCannotOpen() throws SQLException, FileNotFoundException {
+    File lackOfPermissionFile = new File("test/AddressBook/permissiontest.db");
+    lackOfPermissionFile.setReadable(false);
+    assertThrows(FileNotFoundException.class, () -> fs.readFile(readAddressBook,lackOfPermissionFile));
+    lackOfPermissionFile.setReadable(true);
+  }
+
+  @Test
   void saveFile() throws SQLException, FileNotFoundException {
     fs.saveFile(writeAddressBook,file);
     AddressBook readAddressBook = new AddressBook();
