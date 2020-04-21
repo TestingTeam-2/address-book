@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
@@ -29,8 +32,7 @@ class PersonTest {
         new Person("Brian", "Withrow", "12345 12TH AVE SE", "Naples", "FL", "30001", "239555555"));
     persons.add(new Person("Briana", "Winslow", "54321 12TH AVE SE", "Atlanta", "GA", "30002",
         "239555557"));
-    searches = new String[]{"Withrow", "Brian", "12345 12TH AVE SE", "Naples", "FL", "30001",
-        "239555555"};
+    searches = new String[]{"Withrow", "Brian", "12345 12TH AVE SE", "Naples", "FL", "30001", "239555555"};
     person = new Person("Brian", "Withrow", "12345 12TH AVE SE", "Naples", "FL", "30001",
         "239555555");
   }
@@ -138,8 +140,9 @@ class PersonTest {
   @Test
   void containsString() {
     for (String s : searches) {
-      assertEquals(true, person.containsString(s));
+      assertThat(true, is(person.containsString(s)));
     }
+    assertThat(false, is(person.containsString("fake string")));
   }
 
   /**
@@ -161,8 +164,20 @@ class PersonTest {
   }
 
   @Test
+  void initializeNullFirstName() {
+    assertThrows(IllegalArgumentException.class, () -> new Person(null, "Withrow", "12345 12TH AVE SE", "Naples", "FL", "30001",
+        "239555555"));
+  }
+
+  @Test
   void initializeEmptyLasttName() {
     assertThrows(IllegalArgumentException.class, () -> new Person("Brian", "", "12345 12TH AVE SE", "Naples", "FL", "30001",
+        "239555555"));
+  }
+
+  @Test
+  void initializeNullLasttName() {
+    assertThrows(IllegalArgumentException.class, () -> new Person("Brian", null, "12345 12TH AVE SE", "Naples", "FL", "30001",
         "239555555"));
   }
 
