@@ -2,6 +2,7 @@ package AddressBook;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,10 +127,7 @@ class PersonTest {
    */
   @Test
   void toStringTest() {
-    String[] names = new String[]{
-        persons.get(0).getLastName() + ", " + persons.get(0).getFirstName(),
-        persons.get(1).getLastName() + ", " + persons.get(1).getFirstName()};
-    assertArrayEquals(new String[]{"Withrow, Brian", "Winslow, Briana"}, names);
+    assertEquals(persons.get(0).getLastName() + ", " + persons.get(0).getFirstName(), persons.get(0).toString());
   }
 
   /**
@@ -154,5 +152,22 @@ class PersonTest {
     for (int i = 0; i < searches.length; i++) {
       assertEquals(searches[i], person.getField(i));
     }
+  }
+
+  @Test
+  void initializeEmptyFirstName() {
+    assertThrows(IllegalArgumentException.class, () -> new Person("", "Withrow", "12345 12TH AVE SE", "Naples", "FL", "30001",
+        "239555555"));
+  }
+
+  @Test
+  void initializeEmptyLasttName() {
+    assertThrows(IllegalArgumentException.class, () -> new Person("Brian", "", "12345 12TH AVE SE", "Naples", "FL", "30001",
+        "239555555"));
+  }
+
+  @Test
+  void tryToGetIncorrectField() {
+    assertThrows(IllegalArgumentException.class, () -> persons.get(0).getField(7));
   }
 }
