@@ -18,7 +18,6 @@ import org.junit.Rule;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Timeout;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
@@ -72,7 +71,6 @@ public class AddressBookControllerTest {
      * @result Persons will be added to address book without any errors.
      */
     @Test
-    @Timeout(1)
     public void add() {
         addressBookController.add(p);
         addressBookController.add(p1);
@@ -86,7 +84,6 @@ public class AddressBookControllerTest {
      * @result Person will be set to certain index in address book without any errors.
      */
     @Test
-    @Timeout(1)
     public void set() {
         int index = 0;
         addressBook.add(p);
@@ -100,7 +97,6 @@ public class AddressBookControllerTest {
      * @result Person will be removed from address book without any errors.
      */
     @Test
-    @Timeout(1)
     public void remove() {
         int index = 0;
         addressBook.add(p);
@@ -115,25 +111,9 @@ public class AddressBookControllerTest {
      * errors.
      */
     @Test
-    @Timeout(1)
     public void get() {
         addressBook.add(p);
         assertNotNull(addressBookController.get(0));
-    }
-
-  @Test
-    public void testInvalidGet() throws IndexOutOfBoundsException {
-
-        // stub test
-        assertThrows(IndexOutOfBoundsException.class, () -> when(
-            addressBook.get(
-                anyInt()
-            )
-        ).thenThrow(new IndexOutOfBoundsException()));
-
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            addressBookController.get(0);
-        });
     }
 
     /**
@@ -154,8 +134,6 @@ public class AddressBookControllerTest {
      *
      * @result Address book will be opened without any errors.
      */
-
-
     @Test
     public void open() throws FileNotFoundException, SQLException {
         addressBook = Mockito.spy(new AddressBook());
@@ -199,6 +177,40 @@ public class AddressBookControllerTest {
     @Test
     public void getModel() {
         assertNotNull(addressBookController.getModel());
+    }
+
+    @Test
+    public void testInvalidAdd() {
+        assertThrows(IllegalArgumentException.class, () ->
+            addressBookController.add( new Person("", "Withrow", "12345 12TH AVE SE",
+                "Naples", "FL", "30001", "239555555")));
+        assertThrows(IllegalArgumentException.class, () ->
+            addressBookController.add(new Person(null, "Withrow", "12345 12TH AVE SE",
+                "Naples", "FL", "30001", "239555555")));
+    }
+    @Test
+    public void testInvalidSet() {
+        addressBook.add(p);
+        assertThrows(IndexOutOfBoundsException.class, () ->
+            addressBookController.set(-1, p1));
+    }
+    @Test
+    public void testInvalidRemove() {
+        assertThrows(IndexOutOfBoundsException.class, () ->
+            addressBookController.remove(0));
+    }
+    @Test
+    public void testInvalidGet() throws IndexOutOfBoundsException {
+        // stub test
+        assertThrows(IndexOutOfBoundsException.class, () -> when(
+            addressBook.get(
+                anyInt()
+            )
+        ).thenThrow(new IndexOutOfBoundsException()));
+
+        assertThrows(IndexOutOfBoundsException.class, () ->
+            addressBookController.get(0)
+        );
     }
 
 }

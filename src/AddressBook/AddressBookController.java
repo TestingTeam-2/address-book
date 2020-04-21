@@ -14,7 +14,7 @@ public class AddressBookController {
         this.addressBook = addressBook;
     }
 
-    public void add(Person p) {
+    public void add(Person p) throws NullPointerException {
         addressBook.add(p);
     }
 
