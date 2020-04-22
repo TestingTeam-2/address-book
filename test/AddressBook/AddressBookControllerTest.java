@@ -149,6 +149,11 @@ public class AddressBookControllerTest {
         verify(addressBook, times(3)).fireTableDataChanged();
     }
 
+    /**
+     * Checks if address book is correctly saved.
+     *
+     * @result Address book will be saved without any errors.
+     */
     @Test
     public void save() throws SQLException, FileNotFoundException {
         List<Person> persons = new ArrayList<>();

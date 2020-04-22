@@ -41,6 +41,11 @@ class AddressBookTest {
     addressBook = null;
   }
 
+  /**
+   * Checks if persons are correctly retrieved.
+   *
+   * @result Persons will retrieved without any errors.
+   */
   @Test
   void getPersons() {
     addressBook.add(persons.get(0));
@@ -49,6 +54,11 @@ class AddressBookTest {
     }
   }
 
+  /**
+   * Checks if persons are correctly added to address book .
+   *
+   * @result Persons will be added to address book without any errors.
+   */
   @Test
   void add() {
     assertEquals(0, addressBook.getPersons().length);
@@ -56,6 +66,11 @@ class AddressBookTest {
     assertEquals(1, addressBook.getPersons().length);
   }
 
+  /**
+   * Checks if persons are correctly set to certain index in address book.
+   *
+   * @result Person will be set to certain index in address book without any errors.
+   */
   @Test
   void set() {
     addressBook.add(persons.get(1));
@@ -63,6 +78,11 @@ class AddressBookTest {
     assertEquals(persons.get(0).getFirstName(), addressBook.get(0).getFirstName());
   }
 
+  /**
+   * Checks if persons are correctly removed from address book.
+   *
+   * @result Person will be removed from address book without any errors.
+   */
   @Test
   void remove() {
     addressBook.add(persons.get(0));
@@ -71,6 +91,11 @@ class AddressBookTest {
     assertEquals(0, addressBook.getPersons().length);
   }
 
+  /**
+   * Checks if persons are correctly removed from address book within 1 second.
+   *
+   * @result Person will be removed from address book without any errors.
+   */
   @Test
   @Timeout(1)
   void removeTime() {
@@ -81,10 +106,11 @@ class AddressBookTest {
   }
 
 
-  @Test
-  void get() {
-  }
-
+  /**
+   * Checks if address book is cleared.
+   *
+   * @result Row count will be retrieved as zero without any errors.
+   */
   @Test
   void clear() {
     addressBook.add(persons.get(0));
@@ -95,6 +121,11 @@ class AddressBookTest {
     assertEquals(0, addressBook.getPersons().length);
   }
 
+  /**
+   * Checks if address book is cleared when address book is empty.
+   *
+   * @result Row count will be retrieved as zero without any errors.
+   */
   @Test
   void emptyClear() {
     assertEquals(0, addressBook.getPersons().length);
@@ -102,6 +133,11 @@ class AddressBookTest {
     assertEquals(0, addressBook.getPersons().length);
   }
 
+  /**
+   * Checks if row count is successfully retrieved.
+   *
+   * @result Row count will be retrieved without any errors.
+   */
   @Test
   void getRowCount() {
     addressBook.add(persons.get(0));
@@ -109,6 +145,11 @@ class AddressBookTest {
     assertEquals(1, addressBook.getRowCount());
   }
 
+  /**
+   * Checks if column count is successfully retrieved.
+   *
+   * @result Column count will be retrieved as zero without any errors.
+   */
   @Test
   void getColumnCount() {
     addressBook.add(persons.get(0));
@@ -127,6 +168,11 @@ class AddressBookTest {
     assertEquals(0, stubTest.getRowCount());
   }
 
+  /**
+   * Checks if values at indices are correctly retrieved.
+   *
+   * @result Values at indices retrieved without any errors.
+   */
   @Test
   void getValueAt() {
     addressBook.add(persons.get(0));
@@ -135,6 +181,11 @@ class AddressBookTest {
     assertEquals("Brian", addressBook.getValueAt(1,1));
   }
 
+  /**
+   * Checks if column names are correctly retrieved.
+   *
+   * @result Column names retrieved without any errors.
+   */
   @Test
   void getColumnName() {
     addressBook.add(persons.get(0));

@@ -1,6 +1,5 @@
 package AddressBook;
 
-import java.io.File;
 import org.junit.Rule;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,9 +23,6 @@ public class AddressBookControllerNonFunctionalTest {
     @Mock
     Person p1;
 
-    private FileSystem fs;
-    private File file;
-
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
@@ -38,8 +34,6 @@ public class AddressBookControllerNonFunctionalTest {
             "Naples", "FL", "30001", "239555555");
         p1 = new Person("Briana", "Withrow", "12345 12TH AVE SE",
             "Naples", "FL", "30001", "239555556");
-        fs = new FileSystem();
-        file = new File("test/AddressBook/test.db");
     }
 
     @AfterEach
@@ -48,8 +42,6 @@ public class AddressBookControllerNonFunctionalTest {
         addressBookController = null;
         p = null;
         p1 = null;
-        fs = null;
-        file = null;
     }
 
     /**
