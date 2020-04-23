@@ -1,8 +1,6 @@
 package AddressBook;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,7 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
@@ -122,7 +119,7 @@ public class AddressBookControllerNonFunctionalTest {
     @Timeout(5)
     @Test
     public void open() throws FileNotFoundException, SQLException {
-        addressBook = Mockito.spy(new AddressBook());
+        addressBook = new AddressBook();
         addressBookController = new AddressBookController(addressBook);
         File file = new File("test/AddressBook/test.db");
 
@@ -132,7 +129,6 @@ public class AddressBookControllerNonFunctionalTest {
         addressBookController.open(file);
         addressBookController.open(file);
         addressBookController.open(file);
-        verify(addressBook, times(3)).fireTableDataChanged();
     }
 
 }
