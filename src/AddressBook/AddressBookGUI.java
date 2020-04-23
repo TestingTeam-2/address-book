@@ -91,7 +91,6 @@ public class AddressBookGUI extends JFrame {
                 saveAsItem.doClick();
                 return;
             }
-            FileSystem fs = new FileSystem();
             try {
                 controller.save(currentFile);
                 saveItem.setEnabled(false);
