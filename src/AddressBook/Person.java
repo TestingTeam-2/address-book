@@ -24,7 +24,16 @@ public class Person {
     private String zip;
     private String phone;
 
- 
+    /**
+     * Initializes Person object with all fields.
+     * @param firstName
+     * @param lastName
+     * @param address
+     * @param city
+     * @param state
+     * @param zip
+     * @param phone
+     */
     public Person(String firstName, String lastName, String address, String city, String state, String zip, String phone) {
         if (firstName == null || firstName.isEmpty())
             throw new IllegalArgumentException("First name cannot be empty");
@@ -44,27 +53,37 @@ public class Person {
         this.phone = phone;
     }
 
-
+    /**
+     * @return first name of Person object.
+     */
     public String getFirstName() {
         return firstName;
     }
 
-  
+    /**
+     * @return last name of Person object.
+     */
     public String getLastName() {
         return lastName;
     }
 
-    
+    /**
+     * @return address of Person object.
+     */
     public String getAddress() {
         return address;
     }
 
-  
+    /**
+     * @return city of Person object.
+     */
     public String getCity() {
         return city;
     }
 
-   
+    /**
+     * @return state of Person object.
+     */
     public String getState() {
         return state;
     }
@@ -87,13 +106,19 @@ public class Person {
         return phone;
     }
 
-   
+    /**
+     * @return Last name, First name of a person object.
+     */
     @Override
     public String toString() {
         return lastName + ", " + firstName;
     }
 
-  
+    /**
+     * Search functionality to filter through all fields of a Person object.
+     *
+     * @return true if the desired string is found in any field of a person
+     */
     public boolean containsString(String findMe) {
         Pattern p = Pattern.compile(Pattern.quote(findMe), Pattern.CASE_INSENSITIVE);
         return p.matcher(firstName).find()
@@ -105,7 +130,12 @@ public class Person {
                 || p.matcher(phone).find();
     }
 
-   
+    /**
+     * Searches out a desired individual field of a person object.
+     *
+     * @param field desired field
+     * @return desired field
+     */
     public String getField(int field) {
         switch (field) {
             case 0:
