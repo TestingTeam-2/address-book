@@ -20,6 +20,7 @@ class AddressBookTest {
     public int getRowCount() {
       return 0;
     }
+
   }
 
   private List<Person> persons;
