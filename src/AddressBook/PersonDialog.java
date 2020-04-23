@@ -1,19 +1,13 @@
 package AddressBook;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Frame;
+import org.jetbrains.annotations.Nullable;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SpringLayout;
-import javax.swing.border.EmptyBorder;
-import org.jetbrains.annotations.Nullable;
 
 
 public class PersonDialog extends JDialog {
@@ -33,6 +27,11 @@ public class PersonDialog extends JDialog {
     private JTextField phone;
     private JLabel errorMsg;
 
+    /**
+     * PersonDialog sets up the GUI placement and fields.
+     * It is called by the AddressBookGUI in order to properly set up the
+     * interface for the user.
+     */
     public PersonDialog(Frame parent) {
 
         super(parent);
@@ -121,6 +120,13 @@ public class PersonDialog extends JDialog {
     }
 
 
+    /**
+     * Same as previous method, but with the addition
+     * that it will be updating a person field passed into it.
+     *
+     * @param parent Frame passed in for reference
+     * @param person Person passed in for updating in the Dialog.
+     */
     public PersonDialog(Frame parent, @Nullable Person person) {
         this(parent);
         if (person == null) {
@@ -135,7 +141,11 @@ public class PersonDialog extends JDialog {
         phone.setText(person.getPhone());
     }
 
-
+    /**
+     * Reveals dialog that has previously been hidden.
+     *
+     * @return result.
+     */
     public Result showDialog() {
         // Default to CANCEL if the user closes the dialog window
         result = Result.CANCEL;
@@ -143,7 +153,13 @@ public class PersonDialog extends JDialog {
         return result;
     }
 
-
+    /**
+     * Populates a person field with the proper information given that
+     * the first and last name are non-null non-empty.
+     * If they are empty or null, it will return null.
+     *
+     * @return Person data or Null.
+     */
     public Person getPerson() {
 
         if (firstName != null && lastName != null &&
@@ -160,6 +176,11 @@ public class PersonDialog extends JDialog {
         }
     }
 
+    /**
+     * Checks for the validity of person entries.
+     *
+     * @return false if invalid, true if valid
+     */
     public boolean isPersonValid() {
 
         Pattern numberPattern = Pattern.compile("^[0-9]*$");
