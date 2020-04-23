@@ -40,7 +40,7 @@ class PersonDialogTest {
     void GetPerson() {
         Person p = new Person("Brian",
             "Withrow", "12345 12TH AVE SE",
-            "Naples", "FL", "30001", "239555555");
+            "Naples", "FL", "30001", "2395555555");
         personDialog = new PersonDialog(parent, p);
         Person p2 = personDialog.getPerson();
         for (int i = 0; i < 7 ; i++) {
@@ -58,7 +58,7 @@ class PersonDialogTest {
     void IsPersonValid() {
         Person p = new Person("Brian",
             "Withrow", "12345 12TH AVE SE",
-            "Naples", "FL", "30001", "239555555");
+            "Naples", "FL", "30001", "2395555555");
         personDialog = new PersonDialog(parent, p);
         assertTrue(personDialog.isPersonValid());
     }
@@ -72,7 +72,7 @@ class PersonDialogTest {
     void InvalidZipIsPersonValid() {
         p = new Person("Brian",
             "Withrow", "12345 12TH AVE SE",
-            "Naples", "FL", "zip", "239555555");
+            "Naples", "FL", "zippp", "2395555555");
         personDialog = new PersonDialog(parent, p);
         assertFalse(personDialog.isPersonValid());
     }
@@ -86,7 +86,7 @@ class PersonDialogTest {
     void InvalidPhoneIsPersonValid() {
         Person p = new Person("Brian",
             "Withrow", "12345 12TH AVE SE",
-            "Naples", "FL", "30001", "phone");
+            "Naples", "FL", "30001", "phoneeeeee");
         personDialog = new PersonDialog(parent, p);
         assertFalse(personDialog.isPersonValid());
     }
@@ -102,16 +102,16 @@ class PersonDialogTest {
     void AddressCheckIsPersonValid() {
         Person pLengthTooShort = new Person("Brian",
             "Withrow", "123",
-            "Naples", "FL", "30001", "239555555");
+            "Naples", "FL", "30001", "2395555555");
         Person pLengthCorrect1 = new Person("Brian",
             "Withrow", "1234",
-            "Naples", "FL", "30001", "239555555");
+            "Naples", "FL", "30001", "2395555555");
         Person pLengthCorrect2 = new Person("Brian",
-            "Withrow", "1234678912346789123",
-            "Naples", "FL", "30001", "239555555");
+            "Withrow", "12346789123467891234",
+            "Naples", "FL", "30001", "2395555555");
         Person pLengthTooLong = new Person("Brian",
             "Withrow", "123467891234678912345",
-            "Naples", "FL", "30001", "239555555");
+            "Naples", "FL", "30001", "2395555555");
         personDialog = new PersonDialog(parent, pLengthTooShort);
         assertFalse(personDialog.isPersonValid());
 

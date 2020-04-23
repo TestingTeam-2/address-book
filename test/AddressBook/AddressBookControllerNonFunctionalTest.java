@@ -39,9 +39,9 @@ public class AddressBookControllerNonFunctionalTest {
         addressBook = new AddressBook();
         addressBookController = new AddressBookController(addressBook);
         p = new Person("Brian", "Withrow", "12345 12TH AVE SE",
-            "Naples", "FL", "30001", "239555555");
+            "Naples", "FL", "30001", "2395555555");
         p1 = new Person("Briana", "Withrow", "12345 12TH AVE SE",
-            "Naples", "FL", "30001", "239555556");
+            "Naples", "FL", "30001", "2395555556");
     }
 
     @AfterEach

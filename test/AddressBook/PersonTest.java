@@ -1,27 +1,24 @@
 package AddressBook;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class PersonTest {
 
-  @Mock
-  List<Person> persons;
+  private List<Person> persons;
 
-  @Mock
-  String[] searches;
+  private String[] searches; // Search terms for Person fields
 
-  @Mock
-  Person person;
+  private Person person;
 
   @BeforeEach
   public void setUp() {
@@ -106,7 +103,7 @@ class PersonTest {
   @Test
   void getZip() {
     String[] zips = new String[]{persons.get(0).getZip(), persons.get(1).getZip()};
-    assertArrayEquals(new String[]{"30001", "30002"}, zips);
+    assertArrayEquals(new String[]{"30005", "30002"}, zips);
   }
 
   /**
@@ -116,8 +113,8 @@ class PersonTest {
    */
   @Test
   void getPhone() {
-    String[] phones = new String[]{persons.get(0).getPhone(), persons.get(1).getPhone()};
-    assertArrayEquals(new String[]{"239555555", "239555557"}, phones);
+    String[] phones = new String[]{persons.get(0).getPhone(), person.getPhone()};
+    assertArrayEquals(new String[]{"2395555555", "2395555555"}, phones);
   }
 
   /**
