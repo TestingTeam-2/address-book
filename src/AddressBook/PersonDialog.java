@@ -27,6 +27,7 @@ public class PersonDialog extends JDialog {
     private JTextField phone;
     private JLabel errorMsg;
     Person oldPerson;
+    public boolean isEditable;
     /**
      * PersonDialog sets up the GUI placement and fields.
      * It is called by the AddressBookGUI in order to properly set up the
@@ -35,6 +36,7 @@ public class PersonDialog extends JDialog {
     public PersonDialog(Frame parent) {
 
         super(parent);
+        isEditable = true;
         JLabel l;
         AtomicReference<JPanel> p = new AtomicReference<>(new JPanel(new SpringLayout()));
 
@@ -129,6 +131,7 @@ public class PersonDialog extends JDialog {
     public PersonDialog(Frame parent, @Nullable Person person) {
         this(parent);
         oldPerson = person;
+        isEditable = false;
         if (person == null) {
             return;
         }
@@ -184,8 +187,8 @@ public class PersonDialog extends JDialog {
     public boolean isPersonValid() {
         Pattern numberPattern = Pattern.compile("^[0-9]*$");
 
-        if(!oldPerson.getFirstName().equals(firstName.getText()) ||
-           !oldPerson.getLastName().equals(lastName.getText())) {
+        if(!isEditable && (!oldPerson.getFirstName().equals(firstName.getText()) ||
+           !oldPerson.getLastName().equals(lastName.getText()))) {
             errorMsg.setText("First and last name are not editable");
             return false;
         }
