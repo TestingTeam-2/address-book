@@ -42,7 +42,7 @@ public class Person {
         if (zip.length() != 5 && zip != null)
             throw new IllegalArgumentException("The Zip Code must be 5 digits");
         if (!(phone.length() == 7 || phone.length() == 10) && phone != null)
-            throw new IllegalArgumentException("Phone numbers");
+            throw new IllegalArgumentException("Phone numbers must be 7 or 10 digits if any");
 
         this.firstName = firstName;
         this.lastName = lastName;
