@@ -119,7 +119,7 @@ public class AddressBookControllerNonFunctionalTest {
      *
      * @result Address book will be opened without any errors within 1 second.
      */
-    @Timeout(1)
+    @Timeout(5)
     @Test
     public void open() throws FileNotFoundException, SQLException {
         addressBook = Mockito.spy(new AddressBook());
