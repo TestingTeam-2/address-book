@@ -1,18 +1,16 @@
 package AddressBook;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PersonTest {
 
@@ -29,12 +27,12 @@ class PersonTest {
   public void setUp() {
     persons = new ArrayList<>();
     persons.add(
-        new Person("Brian", "Withrow", "12345 12TH AVE SE", "Naples", "FL", "30001", "239555555"));
+        new Person("Brian", "Withrow", "12345 12TH AVE SE", "Naples", "FL", "30005", "2395555555"));
     persons.add(new Person("Briana", "Winslow", "54321 12TH AVE SE", "Atlanta", "GA", "30002",
-        "239555557"));
-    searches = new String[]{"Withrow", "Brian", "12345 12TH AVE SE", "Naples", "FL", "30001", "239555555"};
+        "5555557"));
+    searches = new String[]{"Withrow", "Brian", "12345 12TH AVE SE", "Naples", "FL", "30001", "2395555555"};
     person = new Person("Brian", "Withrow", "12345 12TH AVE SE", "Naples", "FL", "30001",
-        "239555555");
+        "2395555555");
   }
 
   @AfterEach
@@ -157,32 +155,101 @@ class PersonTest {
     }
   }
 
+  /**
+   * Checks if person's first name field is empty.
+   *
+   * @result IllegalArgumentException will be thrown.
+   */
   @Test
   void initializeEmptyFirstName() {
     assertThrows(IllegalArgumentException.class, () -> new Person("", "Withrow", "12345 12TH AVE SE", "Naples", "FL", "30001",
         "239555555"));
   }
 
+  /**
+   * Checks if person's first name field is null.
+   *
+   *
+   * @result IllegalArgumentException will be thrown.
+   */
   @Test
   void initializeNullFirstName() {
     assertThrows(IllegalArgumentException.class, () -> new Person(null, "Withrow", "12345 12TH AVE SE", "Naples", "FL", "30001",
         "239555555"));
   }
 
+  /**
+   * Checks if person's last name field is empty.
+   *
+   * @result IllegalArgumentException will be thrown.
+   */
   @Test
   void initializeEmptyLasttName() {
     assertThrows(IllegalArgumentException.class, () -> new Person("Brian", "", "12345 12TH AVE SE", "Naples", "FL", "30001",
         "239555555"));
   }
 
+  /**
+   * Checks if person's last name field is null.
+   *
+   *
+   * @result IllegalArgumentException will be thrown.
+   */
   @Test
-  void initializeNullLasttName() {
+  void initializeNullLastName() {
     assertThrows(IllegalArgumentException.class, () -> new Person("Brian", null, "12345 12TH AVE SE", "Naples", "FL", "30001",
         "239555555"));
   }
 
+  /**
+   * Checks if a field requested does not exist.
+   *
+   * @result Produces an IllegalArgumentException.
+   */
   @Test
   void tryToGetIncorrectField() {
     assertThrows(IllegalArgumentException.class, () -> persons.get(0).getField(7));
   }
+
+  /**
+   * Checks that the ZIP code has 5 digits.
+   *
+   * @result Passes without flaw.
+   */
+  @Test
+  void equivalanceZipCorrect(){
+    assertEquals(true,persons.get(0).getZip().length() == 5);
+  }
+
+  /**
+   * Checks that the ZIP code does not have 5 digits, and is not empty.
+   *
+   * @result Passes without flaw.
+   */
+  @Test
+  void equivalanceZipIncorrect(){
+    assertThrows(IllegalArgumentException.class, () -> persons.add(
+            new Person("Brian", "Withrow", "12345 12TH AVE SE", "Naples", "FL", "3", "2395555555")));
+  }
+
+  /**
+   * Checks that the ZIP code has 5 digits.
+   *
+   * @result Passes without flaw.
+   */
+  @Test
+  void equivalancePhoneCorrect(){
+    assertEquals(true,persons.get(0).getPhone().length() == 10);
+  }
+
+  /**
+   * Checks that the ZIP code does not have 5 digits, and is not empty.
+   *
+   * @result Passes without flaw.
+   */
+  @Test
+  void equivalancePhoneCorrect2(){
+    assertEquals(true,persons.get(1).getPhone().length() == 7);
+  }
+
 }
