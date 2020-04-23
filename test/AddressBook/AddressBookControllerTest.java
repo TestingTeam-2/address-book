@@ -25,198 +25,220 @@ import org.mockito.junit.MockitoRule;
 
 public class AddressBookControllerTest {
 
-    @Mock
-    AddressBook addressBook;
+  @Mock
+  AddressBook addressBook;
 
-    @Mock
-    AddressBookController addressBookController;
+  @Mock
+  AddressBookController addressBookController;
 
-    @Mock
-    Person p;
+  @Mock
+  Person p;
 
-    @Mock
-    Person p1;
+  @Mock
+  Person p1;
 
-    private FileSystem fs;
-    private File file;
+  private FileSystem fs;
+  private File file;
 
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
+  @Rule
+  public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-    @BeforeEach
-    public void setUp() {
-        addressBook = new AddressBook();
-        addressBookController = new AddressBookController(addressBook);
-        p = new Person("Brian", "Withrow", "12345 12TH AVE SE",
-            "Naples", "FL", "30001", "2395555555");
-        p1 = new Person("Briana", "Withrow", "12345 12TH AVE SE",
-            "Naples", "FL", "30001", "2395555556");
-        fs = new FileSystem();
-        file = new File("test/AddressBook/test.db");
+  /**
+   * Sets up the reused variables used in testing
+   */
+  @BeforeEach
+  public void setUp() {
+    addressBook = new AddressBook();
+    addressBookController = new AddressBookController(addressBook);
+    p = new Person("Brian", "Withrow", "12345 12TH AVE SE",
+        "Naples", "FL", "30001", "2395555555");
+    p1 = new Person("Briana", "Withrow", "12345 12TH AVE SE",
+        "Naples", "FL", "30001", "2395555556");
+    fs = new FileSystem();
+    file = new File("test/AddressBook/test.db");
+  }
+
+  /**
+   * nullifies down the used variables in testing methods
+   */
+  @AfterEach
+  public void tearDown() {
+    addressBook = null;
+    addressBookController = null;
+    p = null;
+    p1 = null;
+    fs = null;
+    file = null;
+  }
+
+  /**
+   * Checks if persons are correctly added to address book.
+   *
+   * @result Persons will be added to address book without any errors.
+   */
+  @Test
+  public void add() {
+    addressBookController.add(p);
+    addressBookController.add(p1);
+    Person[] pArray = new Person[]{p, p1};
+    assertArrayEquals(pArray, addressBook.getPersons());
+  }
+
+  /**
+   * Checks if persons are correctly set to certain index in address book.
+   *
+   * @result Person will be set to certain index in address book without any errors.
+   */
+  @Test
+  public void set() {
+    int index = 0;
+    addressBook.add(p);
+    addressBookController.set(index, p1);
+    assertEquals(p1, addressBook.get(index));
+  }
+
+  /**
+   * Checks if persons are correctly removed from address book.
+   *
+   * @result Person will be removed from address book without any errors.
+   */
+  @Test
+  public void remove() {
+    int index = 0;
+    addressBook.add(p);
+    addressBookController.remove(index);
+    assertEquals(0, addressBook.getRowCount());
+  }
+
+  /**
+   * Checks if person is correctly retrieved based on certain index from address book.
+   *
+   * @result Person will be retrieved from address book based on index parameter without any
+   * errors.
+   */
+  @Test
+  public void get() {
+    addressBook.add(p);
+    assertNotNull(addressBookController.get(0));
+  }
+
+  /**
+   * Checks if address book is cleared.
+   *
+   * @result Row count will be retrieved as zero without any errors.
+   */
+  @Test
+  public void clear() {
+    addressBook.add(p);
+    addressBook.add(p1);
+    addressBookController.clear();
+    assertEquals(0, addressBook.getRowCount());
+  }
+
+  /**
+   * Checks if address book is correctly opened.
+   *
+   * @result Address book will be opened without any errors.
+   */
+  @Test
+  public void open() throws FileNotFoundException, SQLException {
+    addressBook = Mockito.spy(new AddressBook());
+    addressBookController = new AddressBookController(addressBook);
+    File file = new File("test/AddressBook/test.db");
+
+    assertThrows(FileNotFoundException.class, () ->
+        addressBookController.open(new File("#")));
+
+    addressBookController.open(file);
+    addressBookController.open(file);
+    addressBookController.open(file);
+    verify(addressBook, times(3)).fireTableDataChanged();
+  }
+
+  /**
+   * Checks if address book is correctly saved.
+   *
+   * @result Address book will be saved without any errors.
+   */
+  @Test
+  public void save() throws SQLException, FileNotFoundException {
+    List<Person> persons = new ArrayList<>();
+    persons.add(
+        new Person("Carlos", "Reyes", "1234 25th Way", "Naples", "FL", "30001", "2392392399"));
+    persons.add(
+        new Person("Brian", "Withrow", "1234 26th Way", "Chicago", "IL", "10001", "2012012001"));
+    addressBook.add(persons.get(0));
+    addressBook.add(persons.get(1));
+    AddressBookController abc = new AddressBookController(addressBook);
+    abc.save(file);
+    AddressBook readAddressBook = new AddressBook();
+    fs.readFile(readAddressBook, file);
+    for (int i = 0; i < readAddressBook.getPersons().length; i++) {
+      for (int j = 0; j < Person.fields.length; j++) {
+        assertEquals(persons.get(i).getField(j), readAddressBook.get(i).getField(j));
+      }
     }
+  }
 
-    @AfterEach
-    public void tearDown() {
-        addressBook = null;
-        addressBookController = null;
-        p = null;
-        p1 = null;
-        fs = null;
-        file = null;
-    }
+  /**
+   * Checks if address book is correctly retrieved.
+   *
+   * @result Address book will be retrieved without any errors.
+   */
+  @Test
+  public void getModel() {
+    assertNotNull(addressBookController.getModel());
+  }
 
-    /**
-     * Checks if persons are correctly added to address book.
-     *
-     * @result Persons will be added to address book without any errors.
-     */
-    @Test
-    public void add() {
-        addressBookController.add(p);
-        addressBookController.add(p1);
-        Person[] pArray = new Person[]{p, p1};
-        assertArrayEquals(pArray, addressBook.getPersons());
-    }
+  /**
+   * Insures that invalid arguments for add() indeed throw an IllegalArgumentException
+   */
+  @Test
+  public void testInvalidAdd() {
+    assertThrows(IllegalArgumentException.class, () ->
+        addressBookController.add(new Person("", "Withrow", "12345 12TH AVE SE",
+            "Naples", "FL", "30001", "239555555")));
+    assertThrows(IllegalArgumentException.class, () ->
+        addressBookController.add(new Person(null, "Withrow", "12345 12TH AVE SE",
+            "Naples", "FL", "30001", "239555555")));
+  }
 
-    /**
-     * Checks if persons are correctly set to certain index in address book.
-     *
-     * @result Person will be set to certain index in address book without any errors.
-     */
-    @Test
-    public void set() {
-        int index = 0;
-        addressBook.add(p);
-        addressBookController.set(index, p1);
-        assertEquals(p1, addressBook.get(index));
-    }
+  /**
+   * Insures that out of bound arguments for set() indeed throw an IndexOutOfBoundsException
+   */
+  @Test
+  public void testInvalidSet() {
+    addressBook.add(p);
+    assertThrows(IndexOutOfBoundsException.class, () ->
+        addressBookController.set(-1, p1));
+  }
 
-    /**
-     * Checks if persons are correctly removed from address book.
-     *
-     * @result Person will be removed from address book without any errors.
-     */
-    @Test
-    public void remove() {
-        int index = 0;
-        addressBook.add(p);
-        addressBookController.remove(index);
-        assertEquals(0, addressBook.getRowCount());
-    }
+  /**
+   * Insures that out of bound arguments for remove() indeed throw an IndexOutOfBoundsException
+   */
+  @Test
+  public void testInvalidRemove() {
+    assertThrows(IndexOutOfBoundsException.class, () ->
+        addressBookController.remove(0));
+  }
 
-    /**
-     * Checks if person is correctly retrieved based on certain index from address book.
-     *
-     * @result Person will be retrieved from address book based on index parameter without any
-     * errors.
-     */
-    @Test
-    public void get() {
-        addressBook.add(p);
-        assertNotNull(addressBookController.get(0));
-    }
+  /**
+   * Insures that out of bound arguments for get() indeed throw an IndexOutOfBoundsException for
+   * both AddressBook and AddressBookController
+   */
+  @Test
+  public void testInvalidGet() throws IndexOutOfBoundsException {
+    // stub test
+    assertThrows(IndexOutOfBoundsException.class, () -> when(
+        addressBook.get(
+            anyInt()
+        )
+    ).thenThrow(new IndexOutOfBoundsException()));
 
-    /**
-     * Checks if address book is cleared.
-     *
-     * @result Row count will be retrieved as zero without any errors.
-     */
-    @Test
-    public void clear() {
-        addressBook.add(p);
-        addressBook.add(p1);
-        addressBookController.clear();
-        assertEquals(0, addressBook.getRowCount());
-    }
-
-    /**
-     * Checks if address book is correctly opened.
-     *
-     * @result Address book will be opened without any errors.
-     */
-    @Test
-    public void open() throws FileNotFoundException, SQLException {
-        addressBook = Mockito.spy(new AddressBook());
-        addressBookController = new AddressBookController(addressBook);
-        File file = new File("test/AddressBook/test.db");
-
-        assertThrows(FileNotFoundException.class, () ->
-            addressBookController.open(new File("#")));
-
-        addressBookController.open(file);
-        addressBookController.open(file);
-        addressBookController.open(file);
-        verify(addressBook, times(3)).fireTableDataChanged();
-    }
-
-    /**
-     * Checks if address book is correctly saved.
-     *
-     * @result Address book will be saved without any errors.
-     */
-    @Test
-    public void save() throws SQLException, FileNotFoundException {
-        List<Person> persons = new ArrayList<>();
-        persons.add(
-            new Person("Carlos", "Reyes", "1234 25th Way", "Naples", "FL", "30001", "2392392399"));
-        persons.add(
-            new Person("Brian", "Withrow", "1234 26th Way", "Chicago", "IL", "10001", "2012012001"));
-        addressBook.add(persons.get(0));
-        addressBook.add(persons.get(1));
-        AddressBookController abc = new AddressBookController(addressBook);
-        abc.save(file);
-        AddressBook readAddressBook = new AddressBook();
-        fs.readFile(readAddressBook, file);
-        for (int i = 0; i < readAddressBook.getPersons().length; i++) {
-            for (int j = 0; j < Person.fields.length; j++) {
-                assertEquals(persons.get(i).getField(j),readAddressBook.get(i).getField(j));
-            }
-        }
-    }
-
-    /**
-     * Checks if address book is correctly retrieved.
-     *
-     * @result Address book will be retrieved without any errors.
-     */
-    @Test
-    public void getModel() {
-        assertNotNull(addressBookController.getModel());
-    }
-
-    @Test
-    public void testInvalidAdd() {
-        assertThrows(IllegalArgumentException.class, () ->
-            addressBookController.add( new Person("", "Withrow", "12345 12TH AVE SE",
-                "Naples", "FL", "30001", "239555555")));
-        assertThrows(IllegalArgumentException.class, () ->
-            addressBookController.add(new Person(null, "Withrow", "12345 12TH AVE SE",
-                "Naples", "FL", "30001", "239555555")));
-    }
-    @Test
-    public void testInvalidSet() {
-        addressBook.add(p);
-        assertThrows(IndexOutOfBoundsException.class, () ->
-            addressBookController.set(-1, p1));
-    }
-    @Test
-    public void testInvalidRemove() {
-        assertThrows(IndexOutOfBoundsException.class, () ->
-            addressBookController.remove(0));
-    }
-    @Test
-    public void testInvalidGet() throws IndexOutOfBoundsException {
-        // stub test
-        assertThrows(IndexOutOfBoundsException.class, () -> when(
-            addressBook.get(
-                anyInt()
-            )
-        ).thenThrow(new IndexOutOfBoundsException()));
-
-        assertThrows(IndexOutOfBoundsException.class, () ->
-            addressBookController.get(0)
-        );
-    }
+    assertThrows(IndexOutOfBoundsException.class, () ->
+        addressBookController.get(0)
+    );
+  }
 
 }
 

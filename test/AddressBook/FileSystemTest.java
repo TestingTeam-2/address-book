@@ -20,6 +20,9 @@ class FileSystemTest {
   private FileSystem fs;
   private File file;
 
+  /**
+   * Sets up the reused variables used in testing
+   */
   @BeforeEach
   public void setUp() {
     fs = new FileSystem();
@@ -35,6 +38,9 @@ class FileSystemTest {
     readAddressBook = new AddressBook();
   }
 
+  /**
+   * nullifies down the used variables in testing methods
+   */
   @AfterEach
   public void tearDown() {
     fs = null;
@@ -44,38 +50,54 @@ class FileSystemTest {
     readAddressBook = null;
   }
 
+  /**
+   * Tests to see if Person data can be extracted and read form the supplied file
+   */
   @Test
   void readFile() throws SQLException, FileNotFoundException {
     fs.readFile(readAddressBook, file);
     for (int i = 0; i < readAddressBook.getPersons().length; i++) {
       for (int j = 0; j < Person.fields.length; j++) {
-        assertEquals(persons.get(i).getField(j),readAddressBook.get(i).getField(j));
+        assertEquals(persons.get(i).getField(j), readAddressBook.get(i).getField(j));
       }
     }
   }
 
+  /**
+   * Ensures that files that are not found using the readFile() results in the throwing of a
+   * FileNotFoundException
+   */
   @Test
   void readFileNotFound() throws SQLException, FileNotFoundException {
     File fakefile = new File("test/AddressBook/fake.db");
-    assertThrows(FileNotFoundException.class, () -> fs.readFile(readAddressBook,fakefile));
+    assertThrows(FileNotFoundException.class, () -> fs.readFile(readAddressBook, fakefile));
   }
 
+  /**
+   * Ensures that files that exist but do not grant this executing process permission throw a
+   * FileNotFoundException within readFile()
+   */
   @Test
   void readFileCannotOpen() throws SQLException, FileNotFoundException {
     File lackOfPermissionFile = new File("test/AddressBook/permissiontest.db");
     lackOfPermissionFile.setReadable(false);
-    assertThrows(FileNotFoundException.class, () -> fs.readFile(readAddressBook,lackOfPermissionFile));
+    assertThrows(FileNotFoundException.class,
+        () -> fs.readFile(readAddressBook, lackOfPermissionFile));
     lackOfPermissionFile.setReadable(true);
   }
 
+  /**
+   * Ensures that Person data is able to be saved in a file. This is confirmed by executing a
+   * readFile() operation afterwards on the gathered data
+   */
   @Test
   void saveFile() throws SQLException, FileNotFoundException {
-    fs.saveFile(writeAddressBook,file);
+    fs.saveFile(writeAddressBook, file);
     AddressBook readAddressBook = new AddressBook();
     fs.readFile(readAddressBook, file);
     for (int i = 0; i < readAddressBook.getPersons().length; i++) {
       for (int j = 0; j < Person.fields.length; j++) {
-        assertEquals(persons.get(i).getField(j),readAddressBook.get(i).getField(j));
+        assertEquals(persons.get(i).getField(j), readAddressBook.get(i).getField(j));
       }
     }
   }

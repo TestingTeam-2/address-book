@@ -9,6 +9,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
+/**
+ * Class developed to demonstrate stubbing for the AddressBook
+ */
 class AddressBookTest {
 
   class stubAddressBook extends AddressBook {
@@ -26,6 +29,9 @@ class AddressBookTest {
   private List<Person> persons;
   private AddressBook addressBook;
 
+  /**
+   * Sets up the reused variables used in testing
+   */
   @BeforeEach
   public void setUp() {
     persons = new ArrayList<>();
@@ -36,6 +42,9 @@ class AddressBookTest {
     addressBook = new AddressBook();
   }
 
+  /**
+   * nullifies down the used variables in testing methods
+   */
   @AfterEach
   public void tearDown() {
     persons = null;
@@ -51,7 +60,7 @@ class AddressBookTest {
   void getPersons() {
     addressBook.add(persons.get(0));
     for (int i = 0; i < addressBook.getPersons().length; i++) {
-        assertEquals(persons.get(0).getField(i), addressBook.getPersons()[0].getField(i));
+      assertEquals(persons.get(0).getField(i), addressBook.getPersons()[0].getField(i));
     }
   }
 
@@ -157,12 +166,18 @@ class AddressBookTest {
     assertEquals(7, addressBook.getColumnCount());
   }
 
+  /**
+   * Tests the stubbed getColumnCount method Checks if column count is successfully retrieved.
+   */
   @Test
   void getColumnCountStub() {
     stubAddressBook stubTest = new stubAddressBook();
     assertEquals(0, stubTest.getColumnCount());
   }
 
+  /**
+   * Tests the stubbed getRowCountStub Checks if row count is successfully retrieved.
+   */
   @Test
   void getRowCountStub() {
     stubAddressBook stubTest = new stubAddressBook();
@@ -178,8 +193,8 @@ class AddressBookTest {
   void getValueAt() {
     addressBook.add(persons.get(0));
     addressBook.add(persons.get(1));
-    assertEquals("Reyes", addressBook.getValueAt(0,0));
-    assertEquals("Brian", addressBook.getValueAt(1,1));
+    assertEquals("Reyes", addressBook.getValueAt(0, 0));
+    assertEquals("Brian", addressBook.getValueAt(1, 1));
   }
 
   /**
