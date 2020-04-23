@@ -6,7 +6,18 @@ import java.sql.*;
 
 
 public class FileSystem {
-    
+
+    /**
+     * readFile pulls an AddressBook from the database and
+     * iterates through all the records to add them to the current
+     * AddressBook after clearing the previous contents.
+     * It will then close the connection to the database.
+     *
+     * @param addressBook
+     * @param file
+     * @throws SQLException
+     * @throws FileNotFoundException
+     */
     public void readFile(AddressBook addressBook, File file) throws SQLException, FileNotFoundException {
         if (!file.exists() || !file.canRead()) {
             throw new FileNotFoundException();
@@ -32,7 +43,15 @@ public class FileSystem {
         connection.close();
     }
 
-
+    /**
+     * SaveFile creates a connection and prepares the file by
+     * first deleting the pre-existing table. Next, a new
+     * table is created to write in the new details of the AddressBook.
+     *
+     * @param addressBook
+     * @param file
+     * @throws SQLException
+     */
     public void saveFile(AddressBook addressBook, File file) throws SQLException {
         // Create the table structure
         Connection connection = DriverManager.getConnection("jdbc:sqlite:" + file.getAbsolutePath());

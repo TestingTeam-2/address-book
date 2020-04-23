@@ -12,7 +12,12 @@ import java.util.regex.Pattern;
 
 
 public class AddressBookGUI extends JFrame {
-   
+
+    /**
+     * Creates and shows the GUI
+     * designates the GUI and controller before
+     * setting to visible.
+     */
     private static void createAndShowGUI() {
         AddressBook addressBook = new AddressBook();
         AddressBookController controller = new AddressBookController(addressBook);
@@ -20,6 +25,11 @@ public class AddressBookGUI extends JFrame {
         gui.setVisible(true);
     }
 
+    /**
+     * Establishes database.
+     * @param args
+     * @throws ClassNotFoundException
+     */
     public static void main(String[] args) throws ClassNotFoundException {
         Class.forName("org.sqlite.JDBC");
         SwingUtilities.invokeLater(() -> createAndShowGUI());
@@ -43,7 +53,12 @@ public class AddressBookGUI extends JFrame {
 
     private File currentFile = null;
 
-   
+    /**
+     * Arranges window setup
+     * Communicates with other classes to populate data.
+     * @param controller
+     * @param addressBook
+     */
     public AddressBookGUI(AddressBookController controller, AddressBook addressBook) {
         // Set our local variables
         this.controller = controller;
@@ -176,7 +191,7 @@ public class AddressBookGUI extends JFrame {
             if (selectedRow == -1) {
                 return;
             }
-            // TODO: This doesn't work yet
+
             int index = nameList.convertRowIndexToModel(selectedRow);
             Person oldPerson = controller.get(index);
             PersonDialog dialog = new PersonDialog(this, oldPerson);
